@@ -12,39 +12,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      -
-        name: Set up Go
-        uses: actions/setup-go@v2
+      - uses: actions/setup-go@v2
         with:
-          go-version: 1.15
-      -
-        name: Cache Go modules
-        uses: actions/cache@v1
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      -
-        name: Tests
-        run: |
-          go mod tidy
-          go test -v ./...
-      -
-        name: Docker Login
-        uses: docker/login-action@v1
+          go-version: 1.19
+          cache: true
+      - run: go mod tidy
+      - run: go test -v ./...
+      - uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GH_PAT }}
-      -
-        name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
+      - uses: goreleaser/goreleaser-action@v2
         if: success() && startsWith(github.ref, 'refs/tags/')
         with:
           version: latest
