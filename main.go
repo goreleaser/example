@@ -8,5 +8,5 @@ import (
 var version = "dev"
 
 func main() {
-	fmt.Println("hello world, gitlab! (", version, runtime.GOOS, runtime.GOARCH, ")")
+	fmt.Println("hello world, github! (", version, runtime.GOOS, runtime.GOARCH, ")")
 }
