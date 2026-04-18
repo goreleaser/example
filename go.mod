@@ -1,3 +1,3 @@
 module github.com/goreleaser/example
 
-go 1.19
+go 1.26
